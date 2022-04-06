@@ -39,6 +39,9 @@
     <ClCompile Include="Template\5_specialization_class_template.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Algorithm\UnionFind_disjoint set.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Operator_Overloading\operator_overloading.h">

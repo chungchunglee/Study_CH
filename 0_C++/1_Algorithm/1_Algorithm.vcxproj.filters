@@ -180,5 +180,17 @@
     <ClCompile Include="Programmers_School\M2_세미나티셔츠.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="__study_origin\B0_1197_최소 스패닝 트리.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Programmers_School\2_1_N으로표현.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Programmers_School\2_2_여행경로.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Programmers_School\2_3_더 맵게.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

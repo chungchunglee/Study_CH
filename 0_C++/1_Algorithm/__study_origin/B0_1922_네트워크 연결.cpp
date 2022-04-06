@@ -37,13 +37,64 @@ a에서 b를 연결하는 선이 있고, b와 c를 연결하는 선이 있으면 a와 c는 연결이 되어 �
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <set>
 
 using namespace std;
 
+int find(int u, vector<int>& parent)
+{
+	if (u == parent[u]) return u;
+	return parent[u] = find(parent[u], parent);
+}
+void merge(int u, int v, vector<int>& parent)
+{
+	u = find(u, parent);
+	v = find(v, parent);
+	if (u == v) return;
+	parent[u] = v;
+}
+bool same_parent(int u, int v, vector<int>& parent)
+{
+	u = find(u, parent);
+	v = find(v, parent);
+	if (u == v) return true;
+	else return false;
+}
+
+int main()
+{
+	int answer = 0;
+	int N, M;
+	cin >> N >> M;
+	vector<pair<int, pair<int, int>>>  path(M);
+	for (int i = 0; i < M; i++)
+	{
+		int u, v, cost;
+		cin >> u >> v >> cost;
+		path[i] = { cost,{u,v} };
+	}
+	vector<int> parent(N + 1);
+	for (int i = 1; i <= N; i++)
+		parent[i] = i;
+	sort(path.begin(), path.end());
+	for (int i = 0; i < M; i++)
+	{
+		int u = path[i].second.first;
+		int v = path[i].second.second;
+		int cost = path[i].first;
+		if (!same_parent(u, v, parent))
+		{
+			merge(u, v, parent);
+			answer += cost;
+		}
+	}
+	cout << answer;
+	return 0;
+}
+#ifdef __OTHERS__
 int getParent(int num, vector<int> &parent)
 {
 	if (num == parent[num]) return num;
+	//경로 압축
 	return parent[num] = getParent(parent[num], parent);
 }
 void unionParent(int a, int b, vector<int>& parent)
@@ -95,3 +146,4 @@ int main()
 	cout << answer;
 	return 0;
 }
+#endif

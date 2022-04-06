@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithm\UnionFind_disjoint set.cpp" />
     <ClCompile Include="Iterator\reverse_iterator.cpp" />
     <ClCompile Include="Operator_Overloading\operator_overloading.cpp" />
     <ClCompile Include="SmartPointer\1_Start_SmartPointer.cpp" />
