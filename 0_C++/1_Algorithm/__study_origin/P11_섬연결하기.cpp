@@ -23,18 +23,61 @@ costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로로 연결하는 것이 가장 �
 */
 #include <string>
 #include <vector>
-#include <map>
+#include <algorithm>
 
 using namespace std;
+
+int find(int u, vector<int>& parent)
+{
+    if (u == parent[u]) return u;
+    //경로 압축
+    return parent[u] = find(parent[u], parent);
+}
+void merge(int u, int v, vector<int>& parent)
+{
+    u = find(u, parent);
+    v = find(v, parent);
+    if (u != v)
+        parent[u] = v;
+}
+bool compare_parent(int u, int v, vector<int>& parent)
+{
+    u = find(u, parent);
+    v = find(v, parent);
+    if (u == v) return true;
+    else return false;
+}
 
 int solution(int n, vector<vector<int>> costs) 
 {
     int answer = 0;
-    map<pair<int, int>, int> costs_map;
-    for (auto k : costs)
+    int len = costs.size();
+    vector<pair<int, pair<int, int>>> path(len);
+    for (int i = 0; i < len; i++)
     {
-        costs_map.insert(make_pair(make_pair(k[0], k[1]), k[2]));
+        int u, v, cost;
+        u = costs[i][0];
+        v = costs[i][1];
+        cost = costs[i][2];
+        path[i] = { cost,{u,v} };
     }
-
+    sort(path.begin(), path.end());
+    
+    vector<int> parent(n + 1);
+    for (int i = 1; i < n + 1; i++)
+        parent[i] = i;
+    
+    for (int i = 0; i < len; i++)
+    {
+        int u, v, cost;
+        u = path[i].second.first;
+        v = path[i].second.second;
+        cost = path[i].first;
+        if (compare_parent(u, v, parent))
+        {
+            merge(u, v, parent);
+            answer += cost;
+        }
+    }
     return answer;
 }

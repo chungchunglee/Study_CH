@@ -23,10 +23,47 @@ routes	return
 */
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
-
+bool comp_routes(vector<int> a, vector<int> b)
+{
+    return a[1] < b[1];
+}
 int solution(vector<vector<int>> routes) {
-    int answer = 0;
+    int answer = 0, flag = -30001;
+    int len = routes.size();
+    sort(routes.begin(), routes.end(), comp_routes);
+    for (int i = 0; i < len; i++)
+    {
+        if (flag < routes[i][0])
+        {
+            flag = routes[i][1];
+            answer++;
+        }
+    }
     return answer;
 }
+int main()
+{
+    int a = solution({{-20, -15}, { -14, -5}, { -18, -13}, { -5, -3}});
+    return 0;
+}
+#ifdef __OTHERS__
+int solution(vector<vector<int>> routes) {
+    int answer = 0, flag = 30001;
+    int len = routes.size();
+    vector<int> solved_routes(len, 0);
+    sort(routes.rbegin(), routes.rend());
+    for (int i = 0; i < len; i++)
+    {
+        if (flag > routes[i][1])
+        {
+            flag = routes[i][0];
+            answer++;
+        }
+    }
+    return answer;
+}
+
+#endif // __OTHERS__
