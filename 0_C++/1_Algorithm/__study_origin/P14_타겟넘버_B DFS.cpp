@@ -37,11 +37,67 @@ numbers	target	return
 #include <unordered_map>
 using namespace std;
 
+void DFS(vector<int>& numbers, int target, int n, int sum, int& answer)
+{
+    if (n >= numbers.size())
+    {
+        if (sum == target) answer++;
+        return;
+    }
+    DFS(numbers, target, n + 1, sum + numbers[n], answer);
+    DFS(numbers, target, n + 1, sum - numbers[n], answer);
+}
+
+int solution(vector<int> numbers, int target) {
+    int answer = 0;
+    DFS(numbers, target, 1, numbers[0], answer);
+    DFS(numbers, target, 1, -numbers[0], answer);
+
+    return answer;
+}
+int main()
+{
+    int s1 = solution({ 1, 1, 1, 1, 1 }, 3);
+    int s2 = solution({ 4, 1, 2, 1}, 4);
+        //{1, 1, 1, 1, 1}	3	5
+        //{4, 1, 2, 1]}	4	2
+}
+#ifdef __OTHERS__
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int total;
+
+void DFS(vector<int>& numbers, int& target, int sum, int n) {
+    if (n >= numbers.size()) {
+        if (sum == target) total++;
+        return;
+    }
+
+    DFS(numbers, target, sum + numbers[n], n + 1);
+    DFS(numbers, target, sum - numbers[n], n + 1);
+}
+
+int solution(vector<int> numbers, int target) {
+    int answer = 0;
+
+    DFS(numbers, target, numbers[0], 1);
+    DFS(numbers, target, -numbers[0], 1);
+
+    answer = total;
+
+    return answer;
+}
+
+#endif // __OTHERS__
+#ifdef __MYSOL__
 int solution(vector<int> numbers, int target) {
     int answer = 0;
     int len = numbers.size();
-    int x = 1<<len;
-   
+    int x = 1 << len;
+
     unordered_map<int, int> n_m;
     for (int i = 0; i < x; i++)
     {
@@ -59,10 +115,5 @@ int solution(vector<int> numbers, int target) {
 
     return answer;
 }
-int main()
-{
-    int s1 = solution({ 1, 1, 1, 1, 1 }, 3);
-    int s2 = solution({ 4, 1, 2, 1}, 4);
-        //{1, 1, 1, 1, 1}	3	5
-        //{4, 1, 2, 1]}	4	2
-}
+#endif // __MYSOL__
+
