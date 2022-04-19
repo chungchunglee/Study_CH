@@ -27,11 +27,34 @@ scoville	K	return
 
 모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.*/
 #include <vector>
-
+#include <queue>
 
 using namespace std;
 
 int solution(vector<int> scoville, int K) {
-
+    int answer = 0;
+    //문제 해결을 위한 우선 순위 큐 사용
+    priority_queue<int, vector<int>,greater<int>> scoville_pq;
+    for (auto& s : scoville)
+        scoville_pq.push(s);
+    //문제의 조건을 달성할때 반복문 break
+    while (scoville_pq.top() < K)
+    {
+        int scoville_data_1st = scoville_pq.top();
+        scoville_pq.pop();
+        int scoville_data_2nd = scoville_pq.top();
+        scoville_pq.pop();
+        scoville_pq.push(scoville_data_1st + scoville_data_2nd * 2);
+        answer++;
+        //만약 데이터가 1개 남을때까지도 달성할 수 없다면 -1 return
+        if (scoville_pq.size() == 1 && scoville_pq.top() < K)
+            return -1;
+    }
     return answer;
+}
+int main()
+{
+    int s1;
+    s1 = solution({ 5,3,9,10,12 }, 7);
+    return 0;
 }

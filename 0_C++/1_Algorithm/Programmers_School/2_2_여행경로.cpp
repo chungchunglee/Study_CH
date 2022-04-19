@@ -27,10 +27,46 @@ tickets	return
 */
 #include <string>
 #include <vector>
-
+#include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 vector<string> solution(vector<vector<string>> tickets) {
     vector<string> answer;
+    sort(tickets.begin(), tickets.end(),greater<vector<string>>());
+    unordered_map<string, vector<string>> routes;
+    for (auto t : tickets)
+    {
+        routes[t[0]].push_back(t[1]);
+    }
+    vector<string> s;
+    s.push_back("ICN");
+    while (!s.empty())
+    {
+        string airport = s.back();
+        if (routes.find(airport) == routes.end() || routes[airport].size() == 0)
+        {
+            answer.push_back(airport);
+            s.pop_back();
+        }
+        else
+        {
+            s.push_back(routes[airport].back());
+            routes[airport].pop_back();
+        }
+    }
+    reverse(answer.begin(), answer.end());
+
     return answer;
+}
+int main()
+{
+    vector<string> s1;
+    s1 = solution({ {"A", "B"}, { "B", "D" }, { "D", "A" }, { "D", "C" }, { "E","D" }, { "C","E" } });
+    s1 = solution({ {"ICN", "SFO"}, { "ICN", "ATL" }, { "SFO", "ATL" }, { "ATL", "ICN" }, { "ATL","SFO" } });
+    s1 = solution({ {"ICN", "AOO"}, {"AOO", "BOO"}, {"BOO", "COO"}, {"COO", "DOO"}, {"DOO", "EOO"}, {"EOO", "DOO"}, {"DOO", "COO"}, {"COO", "BOO"}, {"BOO", "AOO"} });
+    s1 = solution({ {"ICN", "JFK"}, {"HND", "IAD"}, {"JFK", "HND"} });
+
+
+
 }

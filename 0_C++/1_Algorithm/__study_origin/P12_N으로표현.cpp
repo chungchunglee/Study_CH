@@ -29,7 +29,6 @@ N	number	return
 #include <string>
 #include <vector>
 #include <unordered_set>
-#include <string>
 
 using namespace std;
 void calc(vector<unordered_set<int>>& set_of_num,int N, int index)
